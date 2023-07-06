@@ -1,0 +1,5 @@
+price-monitor-api/node_modules
+price-monitor-web/node_modules
+price-monitor-web/.idea
+price-monitor-web/.vscode
+price-monitor-web/.angular/cache
