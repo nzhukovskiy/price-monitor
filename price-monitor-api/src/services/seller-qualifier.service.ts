@@ -11,27 +11,18 @@ export class SellerQualifierService {
         switch (domain) {
             case "www.ozon.ru": {
                 return "ozon";
-                break;
             }
             case "www.dns-shop.ru": {
                 return "dns";
-                break;
             }
             case "www.mvideo.ru": {
                 return "mvideo";
-                break;
-            }
-            case "aliexpress.ru": {
-                return "aliexpress";
-                break;
             }
             case "www.citilink.ru": {
                 return "citilink";
-                break;
             }
             default: {
-                return null;
-                break;
+                throw new Error("This seller is not supported");
             }
         }
     }

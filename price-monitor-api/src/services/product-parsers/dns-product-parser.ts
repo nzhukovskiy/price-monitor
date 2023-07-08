@@ -1,13 +1,14 @@
-import {IProductParser} from "../../contracts/i-product-parser";
+import {ProductParser} from "../../contracts/product-parser";
 import {Product} from "../../models/product";
 import {Page} from "puppeteer";
 import puppeteer from "puppeteer-extra";
+import {StringHelperService} from "../string-helper.service";
 
-export class DnsProductParser implements IProductParser {
+export class DnsProductParser extends ProductParser {
     readonly priceSelector = '.product-buy__price';
     readonly titleSelector = '.product-card-top__title';
     readonly seller = 'dns';
-
+    
     async parsePrice(link: string): Promise<Product> {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
@@ -19,8 +20,7 @@ export class DnsProductParser implements IProductParser {
         console.log('Success');
 
         const priceElement = await page.waitForSelector(this.priceSelector);
-        let price = await priceElement?.evaluate(el => el.textContent);
-        price = price.slice(0, price.indexOf('₽')).replace(' ', '');
+        let price = this.stringHelperService.removeCurrencyAndSpaces(await priceElement?.evaluate(el => el.textContent));
 
         const titleElement = await page.waitForSelector(this.titleSelector);
         const title = await titleElement?.evaluate(el => el.textContent);

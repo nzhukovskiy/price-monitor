@@ -9,6 +9,9 @@ class StringHelperService {
         }
         return i;
     }
+    removeCurrencyAndSpaces(str) {
+        return str.replace(/\s/g, '').replace("₽", "");
+    }
 }
 exports.StringHelperService = StringHelperService;
 //# sourceMappingURL=string-helper.service.js.map

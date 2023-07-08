@@ -10,6 +10,7 @@ import { SingleProductComponent } from './components/products/single-product/sin
 import { ProductsContainerComponent } from './components/products/products-container/products-container.component';
 import {HttpClient, HttpClientModule, HttpHandler} from "@angular/common/http";
 import {ProductService} from "./services/product/product.service";
+import {CommonModule} from "@angular/common";
 
 const routes: Routes = [
   {path: '', component: MainComponent }
@@ -27,7 +28,8 @@ const routes: Routes = [
     BrowserModule,
     AppRoutingModule,
     RouterModule.forRoot(routes),
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

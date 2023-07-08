@@ -13,21 +13,47 @@ const express = require("express");
 const products_service_1 = require("./services/products.service");
 const seller_qualifier_service_1 = require("./services/seller-qualifier.service");
 const product_parser_factory_1 = require("./factories/product-parser-factory");
+const string_helper_service_1 = require("./services/string-helper.service");
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 puppeteer.use(StealthPlugin());
+const cors = require('cors');
+var corsOptions = {
+    origin: 'http://localhost:4200',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 const app = express();
 const port = 3000;
+app.use(cors(corsOptions));
 const productsService = new products_service_1.ProductsService();
 const sellerQualifierService = new seller_qualifier_service_1.SellerQualifierService();
+const stringHelperService = new string_helper_service_1.StringHelperService();
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 app.get('/parse', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let seller = sellerQualifierService.getSeller(req.query.link);
-    let productParser = product_parser_factory_1.ProductParserFactory.getParser(seller);
-    let product = yield productParser.parsePrice(req.query.link);
-    res.status(200).send(product);
+    try {
+        let seller = sellerQualifierService.getSeller(req.query.link);
+        let productParser = product_parser_factory_1.ProductParserFactory.getParser(seller, stringHelperService);
+        let product = yield productParser.parsePrice(req.query.link);
+        res.status(200).send(product);
+    }
+    catch (e) {
+        res.status(400).send(e.message);
+    }
+}));
+app.get('/get', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const browser = yield puppeteer.launch();
+        const page = yield browser.newPage();
+        yield page.goto(req.query.link, {
+            waitUntil: "networkidle0"
+        });
+        res.status(200).send(yield page.evaluate(() => document.querySelector('*').outerHTML));
+    }
+    catch (e) {
+        res.status(400).send(e.message);
+    }
 }));
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

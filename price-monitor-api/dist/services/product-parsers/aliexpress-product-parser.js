@@ -13,8 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AliexpressProductParser = void 0;
+const product_parser_1 = require("../../contracts/product-parser");
 const puppeteer_extra_1 = __importDefault(require("puppeteer-extra"));
-class AliexpressProductParser {
+class AliexpressProductParser extends product_parser_1.ProductParser {
     parsePrice(link) {
         return __awaiter(this, void 0, void 0, function* () {
             const browser = yield puppeteer_extra_1.default.launch();
@@ -25,6 +26,7 @@ class AliexpressProductParser {
             });
             console.log('Success');
             let html = yield page.evaluate(() => document.querySelector('*').outerHTML);
+            console.log(html);
             let priceElement = yield page.$(".snow-price_SnowPrice__mainM__jlh6el");
             let price = priceElement.evaluate(x => x.textContent);
             console.log(price);

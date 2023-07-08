@@ -13,26 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OzonProductParser = void 0;
+const product_parser_1 = require("../../contracts/product-parser");
 const puppeteer_extra_1 = __importDefault(require("puppeteer-extra"));
-class OzonProductParser {
+class OzonProductParser extends product_parser_1.ProductParser {
     constructor() {
-        this.priceSelector = '.product-buy__price';
-        this.titleSelector = '.product-card-top__title';
+        super(...arguments);
+        this.priceSelector = 'div[data-widget="webPrice"] > div > div > div > div > span';
+        this.titleSelector = 'div[data-widget="webProductHeading"] > h1';
         this.seller = 'ozon';
     }
     parsePrice(link) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("Ozon parser working");
             const browser = yield puppeteer_extra_1.default.launch();
             const page = yield browser.newPage();
             yield page.goto(link, {
                 waitUntil: "networkidle0"
             });
-            let priceElement = (yield page.$('div[data-widget="webPrice"] > div > div > div > div > span'));
-            let price = (yield priceElement.evaluate(x => x.textContent))
-                .replace(/\s/g, '')
-                .replace("₽", "");
-            let titleElement = (yield page.$('div[data-widget="webProductHeading"] > h1'));
+            let priceElement = (yield page.$(this.priceSelector));
+            let price = this.stringHelperService.removeCurrencyAndSpaces(yield priceElement.evaluate(x => x.textContent));
+            let titleElement = (yield page.$(this.titleSelector));
             let title = yield titleElement.evaluate(x => x.textContent);
             return {
                 title: title,

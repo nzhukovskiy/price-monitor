@@ -13,9 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DnsProductParser = void 0;
+const product_parser_1 = require("../../contracts/product-parser");
 const puppeteer_extra_1 = __importDefault(require("puppeteer-extra"));
-class DnsProductParser {
+class DnsProductParser extends product_parser_1.ProductParser {
     constructor() {
+        super(...arguments);
         this.priceSelector = '.product-buy__price';
         this.titleSelector = '.product-card-top__title';
         this.seller = 'dns';
@@ -30,8 +32,7 @@ class DnsProductParser {
             });
             console.log('Success');
             const priceElement = yield page.waitForSelector(this.priceSelector);
-            let price = yield (priceElement === null || priceElement === void 0 ? void 0 : priceElement.evaluate(el => el.textContent));
-            price = price.slice(0, price.indexOf('₽')).replace(' ', '');
+            let price = this.stringHelperService.removeCurrencyAndSpaces(yield (priceElement === null || priceElement === void 0 ? void 0 : priceElement.evaluate(el => el.textContent)));
             const titleElement = yield page.waitForSelector(this.titleSelector);
             const title = yield (titleElement === null || titleElement === void 0 ? void 0 : titleElement.evaluate(el => el.textContent));
             return {

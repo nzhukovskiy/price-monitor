@@ -7,29 +7,24 @@ const citilink_product_parser_1 = require("../services/product-parsers/citilink-
 const aliexpress_product_parser_1 = require("../services/product-parsers/aliexpress-product-parser");
 const mvideo_product_parser_1 = require("../services/product-parsers/mvideo-product-parser");
 class ProductParserFactory {
-    static getParser(seller) {
+    static getParser(seller, stringHelperService) {
         switch (seller) {
             case "dns": {
-                return new dns_product_parser_1.DnsProductParser();
-                break;
+                return new dns_product_parser_1.DnsProductParser(stringHelperService);
             }
             case "ozon": {
-                return new ozon_product_parser_1.OzonProductParser();
-                break;
+                return new ozon_product_parser_1.OzonProductParser(stringHelperService);
             }
             case "citilink": {
-                return new citilink_product_parser_1.CitilinkProductParser();
-                break;
+                return new citilink_product_parser_1.CitilinkProductParser(stringHelperService);
             }
             case "aliexpress": {
-                return new aliexpress_product_parser_1.AliexpressProductParser();
-                break;
+                return new aliexpress_product_parser_1.AliexpressProductParser(stringHelperService);
             }
             case "mvideo": {
-                return new mvideo_product_parser_1.MvideoProductParser();
-                break;
+                return new mvideo_product_parser_1.MvideoProductParser(stringHelperService);
             }
-            default: return null;
+            default: throw new Error("Unknown seller");
         }
     }
 }

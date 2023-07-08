@@ -13,23 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MvideoProductParser = void 0;
+const product_parser_1 = require("../../contracts/product-parser");
 const puppeteer_extra_1 = __importDefault(require("puppeteer-extra"));
-class MvideoProductParser {
+class MvideoProductParser extends product_parser_1.ProductParser {
     constructor() {
+        super(...arguments);
         this.seller = "mvideo";
+        this.priceSelector = ".price__main-value";
+        this.titleSelector = ".title-brand > .title";
     }
     parsePrice(link) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("Mvideo parser working");
             const browser = yield puppeteer_extra_1.default.launch();
             const page = yield browser.newPage();
             yield page.goto(link, {
                 waitUntil: "networkidle0"
             });
-            let priceElement = yield page.$(".price__main-value");
-            let price = (yield priceElement.evaluate(x => x.textContent))
-                .replace(/\s/g, '').replace("₽", "");
-            let title = yield (yield page.$(".title-brand > .title")).evaluate(x => x.textContent);
+            let priceElement = yield page.$(this.priceSelector);
+            let price = this.stringHelperService.removeCurrencyAndSpaces(yield priceElement.evaluate(x => x.textContent));
+            let title = yield (yield page.$(this.titleSelector)).evaluate(x => x.textContent);
             return {
                 title: title,
                 price: parseInt(price),

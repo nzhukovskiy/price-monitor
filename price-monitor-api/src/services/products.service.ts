@@ -1,4 +1,4 @@
-import {IProductParser} from "../contracts/i-product-parser";
+import {ProductParser} from "../contracts/product-parser";
 import puppeteer from "puppeteer-extra";
 import {DnsProductParser} from "./product-parsers/dns-product-parser";
 import express = require('express');
