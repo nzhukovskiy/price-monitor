@@ -1,0 +1,16 @@
+<div class="link-container">
+  <ng-container *ngIf="state == 'show'; else linkEditForm">
+    Текущая ссылка:
+    <div class="link-show">
+      <h4>{{link.getRawValue()}}</h4>
+      <mat-icon class="mat-icon-clickable" (click)="state = 'edit'">edit</mat-icon>
+    </div>
+  </ng-container>
+  <ng-template #linkEditForm>
+    <div class="link-edit">
+      <input [formControl]="link" class="link-input" type="text" placeholder="Введите ссылку на файл">
+      <mat-icon class="mat-icon-clickable" (click)="changeLink()">check</mat-icon>
+      <mat-icon class="mat-icon-clickable" (click)="state = 'show'">close</mat-icon>
+    </div>
+  </ng-template>
+</div>

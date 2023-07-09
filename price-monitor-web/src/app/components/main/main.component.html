@@ -1,4 +1,5 @@
 <app-header></app-header>
 <div class="container">
-  <app-products-container></app-products-container>
+  <app-link (linkChange)="setLink($event)"></app-link>
+  <app-products-container [link]="link"></app-products-container>
 </div>

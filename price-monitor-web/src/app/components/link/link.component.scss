@@ -1,0 +1,17 @@
+.link-edit {
+  display: flex;
+  align-items: center;
+}
+.link-container {
+  margin-top: 15px;
+}
+.link-input {
+  flex: 1;
+  padding: 15px;
+  border-radius: 10px;
+}
+.link-show {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

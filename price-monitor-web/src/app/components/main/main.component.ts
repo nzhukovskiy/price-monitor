@@ -6,4 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
+  link: string = "";
+
+  setLink(link: string) {
+    this.link = link;
+  }
 }

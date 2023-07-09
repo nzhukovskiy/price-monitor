@@ -16,10 +16,18 @@ exports.AliexpressProductParser = void 0;
 const product_parser_1 = require("../../contracts/product-parser");
 const puppeteer_extra_1 = __importDefault(require("puppeteer-extra"));
 class AliexpressProductParser extends product_parser_1.ProductParser {
+    constructor() {
+        super(...arguments);
+        this.priceSelector = ".snow-price_SnowPrice__mainM__jlh6el";
+        this.titleSelector = "h1";
+        this.userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
+            "(KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36";
+    }
     parsePrice(link) {
         return __awaiter(this, void 0, void 0, function* () {
             const browser = yield puppeteer_extra_1.default.launch();
             const page = yield browser.newPage();
+            yield page.setUserAgent(this.userAgent);
             console.log("Aliexpress product parser working");
             yield page.goto(link, {
                 waitUntil: "networkidle2"
@@ -27,9 +35,11 @@ class AliexpressProductParser extends product_parser_1.ProductParser {
             console.log('Success');
             let html = yield page.evaluate(() => document.querySelector('*').outerHTML);
             console.log(html);
-            let priceElement = yield page.$(".snow-price_SnowPrice__mainM__jlh6el");
-            let price = priceElement.evaluate(x => x.textContent);
-            console.log(price);
+            let priceElement = yield page.$(this.priceSelector);
+            let price = yield priceElement.evaluate(x => x.textContent);
+            let titleElement = yield page.$(this.titleSelector);
+            let title = yield titleElement.evaluate(x => x.textContent);
+            console.log(price, title);
             return Promise.resolve(undefined);
         });
     }

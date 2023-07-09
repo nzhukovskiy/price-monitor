@@ -31,6 +31,7 @@ class OzonProductParser extends product_parser_1.ProductParser {
             });
             let priceElement = (yield page.$(this.priceSelector));
             let price = this.stringHelperService.removeCurrencyAndSpaces(yield priceElement.evaluate(x => x.textContent));
+            console.log(yield browser.userAgent());
             let titleElement = (yield page.$(this.titleSelector));
             let title = yield titleElement.evaluate(x => x.textContent);
             return {

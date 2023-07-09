@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
-const products_service_1 = require("./services/products.service");
 const seller_qualifier_service_1 = require("./services/seller-qualifier.service");
 const product_parser_factory_1 = require("./factories/product-parser-factory");
 const string_helper_service_1 = require("./services/string-helper.service");
@@ -20,12 +19,11 @@ puppeteer.use(StealthPlugin());
 const cors = require('cors');
 var corsOptions = {
     origin: 'http://localhost:4200',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+    optionsSuccessStatus: 200
 };
 const app = express();
 const port = 3000;
 app.use(cors(corsOptions));
-const productsService = new products_service_1.ProductsService();
 const sellerQualifierService = new seller_qualifier_service_1.SellerQualifierService();
 const stringHelperService = new string_helper_service_1.StringHelperService();
 app.get('/', (req, res) => {

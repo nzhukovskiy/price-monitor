@@ -17,6 +17,7 @@ export class OzonProductParser extends ProductParser{
         let priceElement = (await page.$(this.priceSelector));
         let price = this.stringHelperService.removeCurrencyAndSpaces(await priceElement.evaluate(x => x.textContent));
 
+        console.log(await browser.userAgent());
         let titleElement = (await page.$(this.titleSelector));
         let title = await titleElement.evaluate(x => x.textContent);
         return <Product>{

@@ -15,11 +15,11 @@ export class ProductService {
 
   constructor(private readonly httpClient: HttpClient) { }
 
-  getProducts() {
-    return this.httpClient.get<string[]>(environment.linksUrl);
+  getProducts(fileLink: string) {
+    return this.httpClient.get<string[]>(fileLink);
   }
 
   parseProduct(link: string) {
-    return this.httpClient.get<ProductShow>("http://localhost:3000/parse?link=" + link);
+    return this.httpClient.get<ProductShow>(`${environment.apiBaseUrl}parse?link=${link}`);
   }
 }
