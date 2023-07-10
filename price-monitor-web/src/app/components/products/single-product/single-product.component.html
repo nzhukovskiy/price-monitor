@@ -1,1 +1,7 @@
-<p>single-product works!</p>
+<div class="product-card">
+  <div class="product-info">
+    <p>{{product?.title}}</p>
+    <p class="product-price">{{product?.price}}</p>
+  </div>
+  <app-seller-logo (click)="window.open(product!.link)" [seller]="product?.seller"></app-seller-logo>
+</div>

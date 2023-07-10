@@ -1,0 +1,6 @@
+<div class="filters-trigger-button" [matMenuTriggerFor]="menu">Фильтры</div>
+<mat-menu class="filters-menu" #menu="matMenu">
+  <div (click) = "$event.stopPropagation()">
+    Здесь какие-то фильтры
+  </div>
+</mat-menu>

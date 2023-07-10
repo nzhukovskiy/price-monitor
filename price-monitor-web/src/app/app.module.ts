@@ -18,6 +18,11 @@ import {MaterialModule} from "./material/material.module";
 import {MatIconModule} from "@angular/material/icon";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { SellerLogoComponent } from './components/products/seller-logo/seller-logo.component';
+import { SellerPipe } from './pipes/seller/seller.pipe';
+import { SortPipe } from './pipes/sort/sort.pipe';
+import { FiltersComponent } from './components/products/filters/filters.component';
+import {MatMenuModule} from "@angular/material/menu";
 
 const routes: Routes = [
   {path: '', component: MainComponent }
@@ -32,6 +37,10 @@ const routes: Routes = [
     ProductsContainerComponent,
     SpinnerComponent,
     LinkComponent,
+    SellerLogoComponent,
+    SellerPipe,
+    SortPipe,
+    FiltersComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +51,8 @@ const routes: Routes = [
     MaterialModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatMenuModule
   ],
   providers: [ProductService],
   bootstrap: [AppComponent]

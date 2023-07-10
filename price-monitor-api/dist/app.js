@@ -47,7 +47,7 @@ app.get('/get', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         yield page.goto(req.query.link, {
             waitUntil: "networkidle0"
         });
-        res.status(200).send(yield page.evaluate(() => document.querySelector('*').outerHTML));
+        res.status(200).send(yield page.evaluate(() => document.querySelector('*').textContent));
     }
     catch (e) {
         res.status(400).send(e.message);

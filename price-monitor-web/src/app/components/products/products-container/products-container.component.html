@@ -1,9 +1,5 @@
 <ng-container *ngIf="productsLoaded | async; else notLoadedRef">
-  <div *ngFor="let product of products">
-    <div>
-      {{product.title}}
-    </div>
-  </div>
+  <app-single-product *ngFor="let product of (products | sort:'seller':'asc')" [product]="product"></app-single-product>
 </ng-container>
 <ng-template #notLoadedRef>
   <mat-spinner class="big-black-spinner" diameter="50"></mat-spinner>

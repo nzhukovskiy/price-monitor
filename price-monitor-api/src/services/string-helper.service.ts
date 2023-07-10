@@ -8,6 +8,6 @@ export class StringHelperService {
     }
     
     removeCurrencyAndSpaces(str: string) {
-        return str.replace(/\s/g, '').replace("₽", "");
+        return str.replace(/\s/g, '').slice(0, str.indexOf("₽"));
     }
 }

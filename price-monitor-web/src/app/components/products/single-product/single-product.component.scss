@@ -1,0 +1,17 @@
+.product-card {
+  padding: 10px;
+  border: 2px solid black;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.product-price {
+  font-size: 18px;
+  text-decoration: underline;
+}
+app-seller-logo {
+  cursor: pointer;
+}

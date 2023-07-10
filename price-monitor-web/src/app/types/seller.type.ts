@@ -1,1 +1,1 @@
-export type SellerType = 'ozon' | 'aliexpress' | 'dns' | 'mvideo';
+export type SellerType = 'ozon' | 'aliexpress' | 'dns' | 'mvideo' | 'citilink';

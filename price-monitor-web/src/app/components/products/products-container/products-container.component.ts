@@ -8,7 +8,7 @@ import {BehaviorSubject, forkJoin, Observable, Subscription, tap} from "rxjs";
   templateUrl: './products-container.component.html',
   styleUrls: ['./products-container.component.scss']
 })
-export class ProductsContainerComponent implements OnInit, OnChanges {
+export class ProductsContainerComponent implements OnChanges {
   products: ProductShow[] = [];
   productsLoaded = new BehaviorSubject(false);
   @Input() link?: string;
@@ -16,15 +16,13 @@ export class ProductsContainerComponent implements OnInit, OnChanges {
   constructor(private readonly productService: ProductService) {
   }
 
-  ngOnInit(): void {
-    this.loadProducts();
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     this.loadProducts();
   }
 
   private loadProducts() {
+    this.productsLoaded.next(false);
+    this.products = [];
     this.productService.getProducts(this.link!).subscribe(result => {
       let subscriptions: Observable<any> [] = [];
       result.forEach(el => {

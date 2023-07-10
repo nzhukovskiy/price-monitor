@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {ProductShow} from "../../../models/product-show";
 
 @Component({
   selector: 'app-single-product',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./single-product.component.scss']
 })
 export class SingleProductComponent {
-
+  @Input() product?: ProductShow;
+  protected readonly window = window;
 }

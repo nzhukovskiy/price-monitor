@@ -1,5 +1,4 @@
 import express = require('express')
-import {ProductsService} from "./services/products.service";
 import {SellerQualifierService} from "./services/seller-qualifier.service";
 import {ProductParserFactory} from "./factories/product-parser-factory";
 import {StringHelperService} from "./services/string-helper.service";
@@ -45,7 +44,7 @@ app.get('/get', async (req, res) => {
         await page.goto(req.query.link, {
             waitUntil: "networkidle0"
         });
-        res.status(200).send(await page.evaluate(() => document.querySelector('*').outerHTML));
+        res.status(200).send(await page.evaluate(() => document.querySelector('*').textContent));
     }
     catch (e) {
         res.status(400).send(e.message);

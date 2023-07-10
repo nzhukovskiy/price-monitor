@@ -10,7 +10,7 @@ class StringHelperService {
         return i;
     }
     removeCurrencyAndSpaces(str) {
-        return str.replace(/\s/g, '').replace("₽", "");
+        return str.replace(/\s/g, '').slice(0, str.indexOf("₽"));
     }
 }
 exports.StringHelperService = StringHelperService;
