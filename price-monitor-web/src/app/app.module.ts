@@ -8,15 +8,14 @@ import { MainComponent } from './components/main/main.component';
 import { HeaderComponent } from './components/nav/header/header.component';
 import { SingleProductComponent } from './components/products/single-product/single-product.component';
 import { ProductsContainerComponent } from './components/products/products-container/products-container.component';
-import {HttpClient, HttpClientModule, HttpHandler} from "@angular/common/http";
+import {HttpClientModule} from "@angular/common/http";
 import {ProductService} from "./services/product/product.service";
-import {CommonModule} from "@angular/common";
 import { SpinnerComponent } from './components/ui/spinner/spinner.component';
 import { LinkComponent } from './components/link/link.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MaterialModule} from "./material/material.module";
 import {MatIconModule} from "@angular/material/icon";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { SellerLogoComponent } from './components/products/seller-logo/seller-logo.component';
 import { SellerPipe } from './pipes/seller/seller.pipe';
@@ -42,18 +41,19 @@ const routes: Routes = [
     SortPipe,
     FiltersComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterModule.forRoot(routes),
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    MatProgressSpinnerModule,
-    MatMenuModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        RouterModule.forRoot(routes),
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        MatProgressSpinnerModule,
+        MatMenuModule,
+        FormsModule
+    ],
   providers: [ProductService],
   bootstrap: [AppComponent]
 })

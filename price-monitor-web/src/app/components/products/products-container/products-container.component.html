@@ -1,5 +1,7 @@
 <ng-container *ngIf="productsLoaded | async; else notLoadedRef">
-  <app-single-product *ngFor="let product of (products | sort:'seller':'asc')" [product]="product"></app-single-product>
+  <app-single-product *ngFor="let product of (products | seller:filters!.seller
+  | sort:filters!.sorting.sortingProperty:filters!.sorting.order)"
+                      [product]="product"></app-single-product>
 </ng-container>
 <ng-template #notLoadedRef>
   <mat-spinner class="big-black-spinner" diameter="50"></mat-spinner>

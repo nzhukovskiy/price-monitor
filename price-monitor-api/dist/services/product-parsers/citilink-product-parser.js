@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CitilinkProductParser = void 0;
 const product_parser_1 = require("../../contracts/product-parser");
 const puppeteer_extra_1 = __importDefault(require("puppeteer-extra"));
+const app_1 = require("../../app");
 class CitilinkProductParser extends product_parser_1.ProductParser {
     constructor() {
         super(...arguments);
@@ -24,20 +25,20 @@ class CitilinkProductParser extends product_parser_1.ProductParser {
     }
     parsePrice(link) {
         return __awaiter(this, void 0, void 0, function* () {
-            const browser = yield puppeteer_extra_1.default.launch();
+            const browser = yield puppeteer_extra_1.default.launch(app_1.puppeteerOptions);
             const page = yield browser.newPage();
             yield page.goto(link, {
                 waitUntil: "domcontentloaded"
             });
-            console.log('Success');
             let html = yield page.evaluate(() => document.querySelector('*').outerHTML);
             let priceStr = html.match(this.priceMatcher);
             let price = priceStr["0"].slice(this.stringHelperService.getNthSubstrPos(priceStr["0"], '"', 3), this.stringHelperService.getNthSubstrPos(priceStr["0"], '\"', 4) - 1);
             let titleStr = yield (yield page.$(this.titleSelector)).evaluate(x => x.textContent);
+            yield browser.close();
             return {
                 title: titleStr,
                 price: parseInt(price),
-                link: yield page.evaluate(() => document.location.href),
+                link: link,
                 seller: this.seller
             };
         });

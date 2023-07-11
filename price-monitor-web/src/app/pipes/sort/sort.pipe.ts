@@ -6,12 +6,12 @@ import {ProductShow} from "../../models/product-show";
 })
 export class SortPipe implements PipeTransform {
 
-  transform(products: ProductShow[], sortingAttr: keyof ProductShow, order: 'asc' | 'desc') {
+  transform(products: ProductShow[], sortingProperty: keyof ProductShow, order: 'asc' | 'desc') {
     return products.sort((a, b) => {
-      if (a[sortingAttr] > b[sortingAttr]) {
+      if (a[sortingProperty] > b[sortingProperty]) {
         return order == 'asc' ? 1 : -1;
       }
-      else if (a[sortingAttr] < b[sortingAttr]) {
+      else if (a[sortingProperty] < b[sortingProperty]) {
         return order == 'asc' ? -1 : 1;
       }
       return 0;

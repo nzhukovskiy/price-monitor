@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DnsProductParser = void 0;
 const product_parser_1 = require("../../contracts/product-parser");
 const puppeteer_extra_1 = __importDefault(require("puppeteer-extra"));
+const app_1 = require("../../app");
 class DnsProductParser extends product_parser_1.ProductParser {
     constructor() {
         super(...arguments);
@@ -24,21 +25,20 @@ class DnsProductParser extends product_parser_1.ProductParser {
     }
     parsePrice(link) {
         return __awaiter(this, void 0, void 0, function* () {
-            const browser = yield puppeteer_extra_1.default.launch();
+            const browser = yield puppeteer_extra_1.default.launch(app_1.puppeteerOptions);
             const page = yield browser.newPage();
-            console.log("Dns product parser working");
             yield page.goto(link, {
                 waitUntil: "networkidle0"
             });
-            console.log('Success');
             const priceElement = yield page.waitForSelector(this.priceSelector);
             let price = this.stringHelperService.removeCurrencyAndSpaces(yield (priceElement === null || priceElement === void 0 ? void 0 : priceElement.evaluate(el => el.textContent)));
             const titleElement = yield page.waitForSelector(this.titleSelector);
             const title = yield (titleElement === null || titleElement === void 0 ? void 0 : titleElement.evaluate(el => el.textContent));
+            yield browser.close();
             return {
                 title: title,
                 price: parseInt(price),
-                link: yield page.evaluate(() => document.location.href),
+                link: link,
                 seller: this.seller
             };
         });

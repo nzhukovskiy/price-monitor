@@ -5,8 +5,23 @@
 .filters-trigger-button {
   color: white;
   background-color: black;
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
   max-width: fit-content;
-  margin-bottom: 15px;
+  cursor: pointer;
+}
+.filters-group-title {
+  font-weight: 500;
+}
+.filters-apply-button {
+  color: white;
+  background-color: black;
+  padding: 10px;
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }

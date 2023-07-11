@@ -14,8 +14,21 @@ var corsOptions = {
     optionsSuccessStatus: 200
 }
 
+export const puppeteerOptions = {
+    args: [
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote",
+    ],
+    executablePath:
+        process.env.NODE_ENV === "production"
+            ? process.env.PUPPETEER_EXECUTABLE_PATH
+            : puppeteer.executablePath(),
+};
+
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000;
 app.use(cors(corsOptions));
 
 const sellerQualifierService = new SellerQualifierService();
@@ -52,5 +65,4 @@ app.get('/get', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
 })

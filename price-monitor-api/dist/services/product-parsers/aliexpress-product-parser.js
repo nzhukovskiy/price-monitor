@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AliexpressProductParser = void 0;
 const product_parser_1 = require("../../contracts/product-parser");
 const puppeteer_extra_1 = __importDefault(require("puppeteer-extra"));
+const app_1 = require("../../app");
 class AliexpressProductParser extends product_parser_1.ProductParser {
     constructor() {
         super(...arguments);
@@ -25,21 +26,17 @@ class AliexpressProductParser extends product_parser_1.ProductParser {
     }
     parsePrice(link) {
         return __awaiter(this, void 0, void 0, function* () {
-            const browser = yield puppeteer_extra_1.default.launch();
+            const browser = yield puppeteer_extra_1.default.launch(app_1.puppeteerOptions);
             const page = yield browser.newPage();
             yield page.setUserAgent(this.userAgent);
-            console.log("Aliexpress product parser working");
             yield page.goto(link, {
                 waitUntil: "networkidle2"
             });
-            console.log('Success');
             let html = yield page.evaluate(() => document.querySelector('*').outerHTML);
-            console.log(html);
             let priceElement = yield page.$(this.priceSelector);
             let price = yield priceElement.evaluate(x => x.textContent);
             let titleElement = yield page.$(this.titleSelector);
             let title = yield titleElement.evaluate(x => x.textContent);
-            console.log(price, title);
             return Promise.resolve(undefined);
         });
     }

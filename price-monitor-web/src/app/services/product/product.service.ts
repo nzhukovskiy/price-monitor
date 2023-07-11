@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Product} from "../../models/product";
-import {SellerType} from "../../types/seller.type";
 import {HttpClient} from "@angular/common/http";
-import {Environment} from "@angular/cli/lib/config/workspace-schema";
 import {environment} from "../../../environments/environment.development";
-import {flatMap, from, map, Observable, of, switchMap} from "rxjs";
-import {OzonProductParserService} from "../product-parsers/ozon-product-parser/ozon-product-parser.service";
 import {ProductShow} from "../../models/product-show";
 
 @Injectable({

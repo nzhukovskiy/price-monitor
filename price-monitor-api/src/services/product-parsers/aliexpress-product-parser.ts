@@ -2,6 +2,7 @@ import {ProductParser} from "../../contracts/product-parser";
 import {Page} from "puppeteer";
 import {Product} from "../../models/product";
 import puppeteer from "puppeteer-extra";
+import {puppeteerOptions} from "../../app";
 
 export class AliexpressProductParser extends ProductParser {
     private readonly priceSelector = ".snow-price_SnowPrice__mainM__jlh6el";
@@ -10,22 +11,17 @@ export class AliexpressProductParser extends ProductParser {
         "(KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36";
     
     async parsePrice(link: string): Promise<Product> {
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch(puppeteerOptions);
         const page = await browser.newPage();
         await page.setUserAgent(this.userAgent);
-        console.log("Aliexpress product parser working");
         await page.goto(link, {
             waitUntil: "networkidle2"
         });
-
-        console.log('Success');
         let html = await page.evaluate(() => document.querySelector('*').outerHTML);
-        console.log(html);
         let priceElement = await page.$(this.priceSelector);
         let price = await priceElement.evaluate(x => x.textContent);
         let titleElement = await page.$(this.titleSelector);
         let title = await titleElement.evaluate(x => x.textContent);
-        console.log(price, title);
         return Promise.resolve(undefined);
     }
 

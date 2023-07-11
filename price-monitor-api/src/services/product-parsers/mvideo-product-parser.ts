@@ -3,6 +3,7 @@ import {Page} from "puppeteer";
 import {Product} from "../../models/product";
 import puppeteer from "puppeteer-extra";
 import {StringHelperService} from "../string-helper.service";
+import {puppeteerOptions} from "../../app";
 
 export class MvideoProductParser extends ProductParser {
     private readonly seller = "mvideo";
@@ -10,7 +11,7 @@ export class MvideoProductParser extends ProductParser {
     private readonly titleSelector = ".title-brand > .title";
     
     async parsePrice(link: string): Promise<Product> {
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch(puppeteerOptions);
         const page = await browser.newPage();
         await page.goto(link, {
             waitUntil: "networkidle0"
@@ -19,10 +20,11 @@ export class MvideoProductParser extends ProductParser {
         let price = this.stringHelperService.removeCurrencyAndSpaces(await priceElement.evaluate(x => x.textContent));
 
         let title = await (await page.$(this.titleSelector)).evaluate(x => x.textContent);
+        await browser.close();
         return <Product>{
             title: title,
             price: parseInt(price),
-            link: await page.evaluate(() => document.location.href),
+            link: link,
             seller: this.seller
         };
     }

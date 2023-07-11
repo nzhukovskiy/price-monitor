@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.puppeteerOptions = void 0;
 const express = require("express");
 const seller_qualifier_service_1 = require("./services/seller-qualifier.service");
 const product_parser_factory_1 = require("./factories/product-parser-factory");
@@ -21,8 +22,19 @@ var corsOptions = {
     origin: 'http://localhost:4200',
     optionsSuccessStatus: 200
 };
+exports.puppeteerOptions = {
+    args: [
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote",
+    ],
+    executablePath: process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
+};
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.use(cors(corsOptions));
 const sellerQualifierService = new seller_qualifier_service_1.SellerQualifierService();
 const stringHelperService = new string_helper_service_1.StringHelperService();
@@ -54,6 +66,5 @@ app.get('/get', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 }));
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
 });
 //# sourceMappingURL=app.js.map

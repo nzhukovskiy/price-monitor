@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MvideoProductParser = void 0;
 const product_parser_1 = require("../../contracts/product-parser");
 const puppeteer_extra_1 = __importDefault(require("puppeteer-extra"));
+const app_1 = require("../../app");
 class MvideoProductParser extends product_parser_1.ProductParser {
     constructor() {
         super(...arguments);
@@ -24,7 +25,7 @@ class MvideoProductParser extends product_parser_1.ProductParser {
     }
     parsePrice(link) {
         return __awaiter(this, void 0, void 0, function* () {
-            const browser = yield puppeteer_extra_1.default.launch();
+            const browser = yield puppeteer_extra_1.default.launch(app_1.puppeteerOptions);
             const page = yield browser.newPage();
             yield page.goto(link, {
                 waitUntil: "networkidle0"
@@ -32,10 +33,11 @@ class MvideoProductParser extends product_parser_1.ProductParser {
             let priceElement = yield page.$(this.priceSelector);
             let price = this.stringHelperService.removeCurrencyAndSpaces(yield priceElement.evaluate(x => x.textContent));
             let title = yield (yield page.$(this.titleSelector)).evaluate(x => x.textContent);
+            yield browser.close();
             return {
                 title: title,
                 price: parseInt(price),
-                link: yield page.evaluate(() => document.location.href),
+                link: link,
                 seller: this.seller
             };
         });

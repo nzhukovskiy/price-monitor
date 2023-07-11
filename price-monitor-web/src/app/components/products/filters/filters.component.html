@@ -1,6 +1,36 @@
 <div class="filters-trigger-button" [matMenuTriggerFor]="menu">Фильтры</div>
 <mat-menu class="filters-menu" #menu="matMenu">
   <div (click) = "$event.stopPropagation()">
-    Здесь какие-то фильтры
+    <div class="sorting-filters">
+      <p class="filters-group-title">Сортировка</p>
+      <select name="sorting-property" (selectionchange)="emitFiltersChange()" [(ngModel)]="filters.sorting.sortingProperty">
+        <option [value]="'title'">Название</option>
+        <option [value]="'price'">Цена</option>
+        <option [value]="'seller'">Продавец</option>
+      </select>
+      <select name="sorting-order" (selectionchange)="emitFiltersChange()" [(ngModel)]="filters.sorting.order">
+        <option [value]="'asc'">По возрастанию</option>
+        <option [value]="'desc'">По убыванию</option>
+      </select>
+    </div>
+    <div class="seller-filters">
+      <p class="filters-group-title">Продавцы</p>
+      <div>
+        <input (change)="emitFiltersChange()" name="citilink" id="citilink-checkbox" type="checkbox" [(ngModel)]="filters.seller.citilink">
+        <label for="citilink-checkbox">Ситилинк</label>
+      </div>
+      <div>
+        <input (change)="emitFiltersChange()" name="dns" id="dns-checkbox" type="checkbox" [(ngModel)]="filters.seller.dns">
+        <label for="dns-checkbox">DNS</label>
+      </div>
+      <div>
+        <input (change)="emitFiltersChange()" name="mvideo" id="mvideo-checkbox" type="checkbox" [(ngModel)]="filters.seller.mvideo">
+        <label for="mvideo-checkbox">Mvideo</label>
+      </div>
+      <div>
+        <input (change)="emitFiltersChange()" name="ozon" id="ozon-checkbox" type="checkbox" [(ngModel)]="filters.seller.ozon">
+        <label for="ozon-checkbox">Озон</label>
+      </div>
+    </div>
   </div>
 </mat-menu>
